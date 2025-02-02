@@ -1,6 +1,42 @@
+// Check if the hint message has been shown in the current session
+if (!sessionStorage.getItem("hintShown")) {
+    // Display the hint message
+    const hintMessage = document.querySelector(".hint");
+    hintMessage.style.display = "block";
+
+    // Hide the message after 2.5 seconds
+    setTimeout(() => {
+        hintMessage.style.display = "none";
+    }, 2500);
+
+    // Mark that the hint has been shown in the current session
+    sessionStorage.setItem("hintShown", "true");
+}
+
+
 function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+let scrollToBottom = true;
+
+document.querySelector('.menu').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    if (scrollToBottom) {
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            behavior: 'smooth'
+        });
+    } else {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    scrollToBottom = !scrollToBottom;
+});
 
 const targetSvgs = document.querySelectorAll('svg[data-target="true"]');
 const rotationContainer = document.querySelector('.rotation-container');
@@ -26,12 +62,13 @@ function updateTime() {
         const hours = now.getHours().toString().padStart(2, '0');
         const minutes = now.getMinutes().toString().padStart(2, '0');
         const seconds = now.getSeconds().toString().padStart(2, '0');
-        const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
+        /*const milliseconds = now.getMilliseconds().toString().padStart(3, '0');*/
 
-        clockElement.textContent = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}:${milliseconds}`;
+        clockElement.textContent = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        /*clockElement.textContent = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}:${milliseconds}`;*/
     }
-
-    setInterval(updateTime, 10);
+    /*setInterval(updateTime, 10);*/
+    setInterval(updateTime, 1000);
 
     updateTime();
 }
@@ -76,3 +113,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
